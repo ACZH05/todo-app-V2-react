@@ -1,7 +1,10 @@
 import { Container, Nav, Navbar } from "react-bootstrap"
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom"
 import { TodoContext } from "./contexts/TodoContext"
+import RequireAuth from "./components/RequireAuth"
+import SectionAuth from "./components/SectionAuth"
 import UserContext from "./contexts/UserContext"
+import AuthContext from "./contexts/AuthContext"
 import useLocalStorage from "use-local-storage"
 import Home from "./pages/Home"
 import AddTodo from "./pages/AddTodo"
@@ -12,14 +15,17 @@ import Register from "./pages/Register"
 function Layout() {
   return (
     <>
-      <Navbar bg="light" variant="light">
-        <Container>
-          <Navbar.Brand href="/">Todos</Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link href="/add">Add Todo</Nav.Link>
-          </Nav>
-        </Container>
-      </Navbar>
+      <SectionAuth>
+        <Navbar bg="light" variant="light">
+          <Container>
+            <Navbar.Brand href="/">Todos</Navbar.Brand>
+            <Nav className="me-auto">
+              <Nav.Link href="/add">Add Todo</Nav.Link>
+            </Nav>
+          </Container>
+        </Navbar>
+
+      </SectionAuth>
       <Outlet />
     </>
   )
@@ -27,15 +33,17 @@ function Layout() {
 
 function App() {
   const [ todos, setTodos ] = useLocalStorage("todos", [])
-  const [user, setUser] = useLocalStorage("user", [])
+  const [users, setUsers] = useLocalStorage("users", [])
+  const [loginStatus, setLoginStatus] = useLocalStorage("loginStatus", false)
   return (
+    <AuthContext.Provider value={{ loginStatus, setLoginStatus }}>
     <TodoContext.Provider value={{ todos, setTodos }}>
-      <UserContext.Provider value={{ user, setUser }}>
+      <UserContext.Provider value={{ users, setUsers }}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="add" element={<AddTodo />} />
+            <Route index element={<RequireAuth><Home /></RequireAuth>} />
+            <Route path="add" element={<RequireAuth><AddTodo /></RequireAuth>} />
             <Route path="*" element={<ErrorPage />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
@@ -44,6 +52,7 @@ function App() {
       </BrowserRouter>
       </UserContext.Provider>
     </TodoContext.Provider>
+    </AuthContext.Provider>
   )
 }
 

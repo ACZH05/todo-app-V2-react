@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom"
 import UserContext from "../contexts/UserContext"
 
 function Register() {
-    const user = useContext(UserContext).user
-    const setUser = useContext(UserContext).setUser
+    const users = useContext(UserContext).users
+    const setUsers = useContext(UserContext).setUsers
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
@@ -17,7 +17,7 @@ function Register() {
             e.preventDefault()
             console.log(username)
             console.log(password)
-            setUser([...user, { id: Date.now(), username, password}])
+            setUsers([...users, { id: Date.now(), username, password}])
             navigate("/login")
         }}>
             <Form.Group className="mb-3">
