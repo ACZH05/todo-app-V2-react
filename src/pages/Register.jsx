@@ -15,8 +15,6 @@ function Register() {
         <h1 className="my-3">Register</h1>
         <Form onSubmit={(e) => {
             e.preventDefault()
-            console.log(username)
-            console.log(password)
             setUsers([...users, { id: Date.now(), username, password}])
             navigate("/login")
         }}>

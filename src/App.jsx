@@ -1,4 +1,4 @@
-import { Container, Nav, Navbar } from "react-bootstrap"
+import { Container, Nav, Navbar, Button } from "react-bootstrap"
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom"
 import { TodoContext } from "./contexts/TodoContext"
 import RequireAuth from "./components/RequireAuth"
@@ -12,7 +12,7 @@ import ErrorPage from "./pages/ErrorPage"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
 
-function Layout() {
+function Layout({ setLoginStatus }) {
   return (
     <>
       <SectionAuth>
@@ -22,9 +22,9 @@ function Layout() {
             <Nav className="me-auto">
               <Nav.Link href="/add">Add Todo</Nav.Link>
             </Nav>
+            <Button variant="outline-dark" onClick={() => setLoginStatus(false)}>Log Out</Button>
           </Container>
         </Navbar>
-
       </SectionAuth>
       <Outlet />
     </>
@@ -41,7 +41,7 @@ function App() {
       <UserContext.Provider value={{ users, setUsers }}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Layout setLoginStatus={setLoginStatus} />}>
             <Route index element={<RequireAuth><Home /></RequireAuth>} />
             <Route path="add" element={<RequireAuth><AddTodo /></RequireAuth>} />
             <Route path="*" element={<ErrorPage />} />
