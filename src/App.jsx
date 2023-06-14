@@ -5,6 +5,7 @@ import useLocalStorage from "use-local-storage"
 import Home from "./pages/Home"
 import AddTodo from "./pages/AddTodo"
 import ErrorPage from "./pages/ErrorPage"
+import Login from "./pages/Login"
 
 function Layout() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="add" element={<AddTodo />} />
             <Route path="*" element={<ErrorPage />} />
+            <Route path="login" element={<Login />} />
           </Route>
         </Routes>
       </BrowserRouter>
