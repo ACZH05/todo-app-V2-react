@@ -35,7 +35,7 @@ export default function AddTodo() {
         <Form.Group className='mb-3' controlId='description'>
             <Form.Label>description</Form.Label>
             <Form.Control
-                value={title}
+                value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 as="textarea"
                 rows={3}
