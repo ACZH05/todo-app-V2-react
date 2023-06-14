@@ -1,10 +1,11 @@
 import { Container, Form, Button } from "react-bootstrap"
-import { useState } from "react"
-import useLocalStorage from "use-local-storage"
+import { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
+import UserContext from "../contexts/UserContext"
 
 function Register() {
-    const [user, setUser] = useLocalStorage("user", [])
+    const user = useContext(UserContext).user
+    const setUser = useContext(UserContext).setUser
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
@@ -14,6 +15,8 @@ function Register() {
         <h1 className="my-3">Register</h1>
         <Form onSubmit={(e) => {
             e.preventDefault()
+            console.log(username)
+            console.log(password)
             setUser([...user, { id: Date.now(), username, password}])
             navigate("/login")
         }}>

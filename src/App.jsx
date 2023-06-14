@@ -1,6 +1,7 @@
 import { Container, Nav, Navbar } from "react-bootstrap"
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom"
 import { TodoContext } from "./contexts/TodoContext"
+import UserContext from "./contexts/UserContext"
 import useLocalStorage from "use-local-storage"
 import Home from "./pages/Home"
 import AddTodo from "./pages/AddTodo"
@@ -26,8 +27,10 @@ function Layout() {
 
 function App() {
   const [ todos, setTodos ] = useLocalStorage("todos", [])
+  const [user, setUser] = useLocalStorage("user", [])
   return (
     <TodoContext.Provider value={{ todos, setTodos }}>
+      <UserContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
@@ -39,7 +42,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-      
+      </UserContext.Provider>
     </TodoContext.Provider>
   )
 }
