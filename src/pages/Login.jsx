@@ -15,7 +15,7 @@ function Login() {
     e.preventDefault()
     users.forEach(user => {
       if (user.username === username && user.password === password) {
-        setLoginStatus(true)
+        setLoginStatus(user.id)
         navigate("/")
       }
     })

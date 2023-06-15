@@ -22,7 +22,7 @@ function Layout({ setLoginStatus }) {
             <Nav className="me-auto">
               <Nav.Link href="/add">Add Todo</Nav.Link>
             </Nav>
-            <Button variant="outline-dark" onClick={() => setLoginStatus(false)}>Log Out</Button>
+            <Button variant="outline-dark" onClick={() => setLoginStatus(null)}>Log Out</Button>
           </Container>
         </Navbar>
       </SectionAuth>
@@ -34,7 +34,7 @@ function Layout({ setLoginStatus }) {
 function App() {
   const [ todos, setTodos ] = useLocalStorage("todos", [])
   const [users, setUsers] = useLocalStorage("users", [])
-  const [loginStatus, setLoginStatus] = useLocalStorage("loginStatus", false)
+  const [loginStatus, setLoginStatus] = useLocalStorage("loginStatus", null)
   return (
     <AuthContext.Provider value={{ loginStatus, setLoginStatus }}>
     <TodoContext.Provider value={{ todos, setTodos }}>

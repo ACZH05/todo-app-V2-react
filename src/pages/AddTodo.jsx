@@ -2,6 +2,7 @@ import { useState,useContext } from 'react'
 import { TodoContext } from '../contexts/TodoContext'
 import { useNavigate } from 'react-router-dom'
 import { Button, Container, Form } from 'react-bootstrap'
+import AuthContext from '../contexts/AuthContext'
 
 export default function AddTodo() {
     const [title, setTitle] = useState("")
@@ -9,11 +10,12 @@ export default function AddTodo() {
     const [completed, setCompleted] = useState(false)
     const setTodos = useContext(TodoContext).setTodos
     const todos = useContext(TodoContext).todos
+    const loginStatus = useContext(AuthContext).loginStatus
     const navigate = useNavigate()
 
     function addTodo(e) {
         e.preventDefault()
-        setTodos([...todos, { id: Date.now(), title, description, completed}])
+        setTodos([...todos, { id: Date.now(), userId: loginStatus , title, description, completed}])
         navigate("/")
     }
 
